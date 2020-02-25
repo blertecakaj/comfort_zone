@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>books</title>
+</head>
+<body>
+
+  <div id="Nonfiction">
+    <h3>Nonfiction</h3>
+    {% for books in all_books %}
+      {% if books['category'] == 'Nonfiction' %}
+        <img src="{{books['img_url']}}" alt="book cover">
+        <h4> Title: {{books['title']}}</h4>
+        <h5>Author: {{books['author']}}</h5>
+         <p> Description: {{books['description']}}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div id="Fiction">
+    <h3>Nonfiction</h3>
+    {% for books in all_books %}
+      {% if books['category'] == 'Fiction' %}
+        <img src="{{books['img_url']}}" alt="book cover">
+        <h4> Title: {{books['title']}}</h4>
+        <h5>Author: {{books['author']}}</h5>
+         <p> Description: {{books['description']}}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+
+ 
+</body>
+</html>
