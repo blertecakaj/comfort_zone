@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/profileStyle.css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <title>User Profile</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="/">
+                <img src="../static/img/study.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                ComfortZone
+              </a>
+              <button type="submit" class="btn"><a href="/logout">LogOut</a></button>
+            </nav>
+        </div>
+        <div class="main">
+            <img src="../static/img/profilePic.PNG" alt="profilePic" class="profilePic">
+            <div class="details">
+                {% for user in users %}
+                <h1>{{user['first_name']}} {{user['last_name']}}</h1>
+                <h3>{{user['email']}}</h3>
+                {% endfor %}
+            </div>
+            <h2>Your bookshelf</h2>
+            {% for image in images %}
+            <a href="{{image['img_url']}}" alt="image"></a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

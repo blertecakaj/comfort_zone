@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/loginRegisterStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700"  type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/js/script.js" defer></script>
+    <title>Login</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <nav class="navbar navbar-light bg-light">
+                  <a class="navbar-brand" href="/">
+                  <img src="../static/img/study.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                  ComfortZone
+                </a>
+              </nav>
+        </div>
+        <div class="main">
+            <div class="login_part">
+            <form action="/login" method="POST" id="loginForm">
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                </div>
+                <button type="submit" class="btn  btn1">Login</button>
+            </form>
+            <p class="signUp">Are you new?<button class="btn btn-primary btn1" id="signUp">SignUp</button></p>
+            </div>
+            <div class="register_part">
+            <form action="/register" method="POST" id="registerForm">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="password" id="pw">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm_pw">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm_pw" name="c_password">
+                </div>
+                <button type="submit" class="btn" id="register">Register</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

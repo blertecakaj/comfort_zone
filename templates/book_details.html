@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Comfort Zone</title>
+  </head>
+  <body>
+    <h3>{{book.title}}</h3>
+    <h4>{{book.author}}</h4>
+    <p>{{book.isbn}}</p>
+    <h3>New Book Price: &#36;{{book.new_price}}</h3>
+    <h3>Used Book Price: &#36;{{book.used_price}}</h3>
+    <img src="{{book.img_url}}" alt="{{book.title}}">
+    <p>{{book.description}}</p>
+    <button>Add To Cart</button>
+    {% if book.id in liked_books_ids %}
+    <a href="/remove_from_wishlist/{{book['users_id']}}/{{book.id}}"><button>Remove From Wishlist</button></a>
+    {% else %}
+    <a href="/add_to_wishlist/{{book['users_id']}}/{{book.id}}"><button>Add To Wishlist</button></a>
+    {% endif %}
+
+
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="/add_review/{{book.isbn}}" method="post">
+      <textarea name="content" rows="3" cols="80"></textarea>
+      <input type="submit" value="Add Review">
+    </form>
+  </body>
+</html>
