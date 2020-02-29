@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ComfortZone</title>
+
+  <!-- Bootstrap core CSS -->
+  <link  rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" >
+
+  <!-- Custom fonts for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}"  type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700"  type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  
+
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/agency.css') }}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <img src="{{url_for('static',filename='img/study.png')}}" style="width:40px;">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">&nbsp;ComfortZone</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">Login &nbsp;</a>
+          </li>
+          <li class="nav-item">
+            <form class="form-inline" style="padding-top:5% ;">
+              <i class="fas fa-search" aria-hidden="true"></i>
+              <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" name="search"
+                aria-label="Search">
+            </form>
+          </li>
+          <li class="nav-item" style="margin-top:-2%;padding:0 3%;">
+            <a class="nav-link js-scroll-trigger" href="#services"> <img src="{{url_for('static',filename='img/supermarket.png')}}" style="width:40px;"></a>
+          </li>
+          <li class="nav-item" style="margin-top:-2%">
+            <a class="nav-link js-scroll-trigger" href="#services"> <img src="{{url_for('static',filename='img/heart.png')}}" style="width:40px;"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container" style="position: relative; top:200px">
+    <div class="row">
+        <div class="col-lg-5">
+            <img style="width:100%;"src="{{url_for('static',filename='img/portfolio/01-full.jpg')}}">
+        </div>
+        <div class="col-7 ">
+            <div class="text-center">
+            <h2 class="section-heading text-uppercase">Book title</h2>
+            <h3 class="section-subheading text-muted">Author</h3>
+            <div style="margin-top: 15%;">
+                <h3 class="section-subheading text-muted">Description</h3>
+                <div class="portfolio-caption">
+                    <p class="text-muted">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium corporis officia sint qui distinctio dignissimos ut enim nostrum ad voluptas amet quos debitis consectetur eaque nesciunt inventore ipsam, est quod?</p>
+                 </div>
+                </div>
+
+            <h3>Price: <span style="font-style: italic;">32$</span></h3>
+            <div class="row" style="margin-top: 15%;">
+                <div class="col-6">
+            <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"><img src="{{url_for('static',filename='img/supermarket.png')}}" style="width:40px;"></a>
+                </div>
+                <div class="col-6">
+            <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"><img src="{{url_for('static',filename='img/heart.png')}}" style="width:40px;"></a>
+                </div>
+            </div>            
+            </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{{ url_for('static', filename='js/agency.min.js') }}"></script>
+
+</body>
+
+</html>
