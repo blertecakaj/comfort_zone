@@ -2,6 +2,11 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="../static/css/book_details.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/js/script.js" defer></script>
     <title>Comfort Zone</title>
   </head>
   <body>
@@ -14,9 +19,9 @@
     <p>{{book.description}}</p>
     <button>Add To Cart</button>
     {% if book.id in liked_books_ids %}
-    <a href="/remove_from_wishlist/{{book['users_id']}}/{{book.id}}"><button>Remove From Wishlist</button></a>
+    <span id = heart><a href="/remove_from_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart" aria-hidden="true" ></i></a></span>
     {% else %}
-    <a href="/add_to_wishlist/{{book['users_id']}}/{{book.id}}"><button>Add To Wishlist</button></a>
+    <span id = heart><a href="/add_to_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart-o" aria-hidden="true" ></i></a></span>
     {% endif %}
 
 
@@ -33,5 +38,8 @@
       <textarea name="content" rows="3" cols="80"></textarea>
       <input type="submit" value="Add Review">
     </form>
+    {% for review in reviews%}
+    <p>{{review['first_name']}} {{review['last_name']}} said: {{review['content']}}</p>
+    {% endfor %}
   </body>
 </html>

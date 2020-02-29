@@ -29,7 +29,7 @@
             </div>
             <h2>Your bookshelf</h2>
             {% for image in images %}
-            <a href="{{image['img_url']}}" alt="image"></a>
+            <img src="{{image['img_url']}}" alt="image" class="book_img"></a>
             {% endfor %}
         </div>
     </div>
