@@ -54,6 +54,10 @@ def register_user():
 
         return redirect('/')
 
+@app.route('/on_login')
+def on_login():
+    return render_template("RegisterLogin.html")
+
 @app.route('/login', methods=['POST'])
 def login_user():
 
@@ -83,7 +87,7 @@ def login_user():
             if bcrypt.check_password_hash(hashed_password, request.form['password']):
                 session['user_id'] = user[0]['user_id']
                 session['user_level'] = user[0]['user_level']
-                return redirect('/')
+                return redirect('/books')
             else:
                 flash("Invalid password!")
                 return redirect('/login_register')
@@ -330,7 +334,7 @@ def book_details(id):
     count = mysql.query_db(query)
 
     mysql = connectToMySQL('comfort_zone')
-    query = "select * from reviews left join users on users.user_id = reviews.author right join books on books.id = reviews.book_id where books.id=%(bid)s"
+    query = "select * from reviews left join users on users.user_id = reviews.author right join books on books.id = reviews.book_id where books.id= %(bid)s"
     data = {
         'bid':id
     }

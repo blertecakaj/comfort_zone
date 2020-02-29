@@ -1,0 +1,47 @@
+*{
+    /* outline: 1px solid black; */
+    padding: 0%;
+    margin: 0;
+}
+
+.navbar-light .navbar-brand{
+    color: #fed136;
+    font-family: 'Kaushan Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-size: 25px;
+    padding: 1%;
+    margin-left:40%;
+}
+
+.navbar-light .navbar-brand:hover{
+    color: #fed136;
+}
+
+a{
+    text-decoration: none;
+}
+
+.profilePic{
+    padding: 4%;
+}
+
+.details{
+    vertical-align: top;
+    display: inline-block;
+    padding: 4%;
+}
+
+h1, h2,h3{
+    font-family: 'Playfair Display';
+}
+
+.main h2{
+    margin-left: 40%;
+    color: #eec019;
+    font-weight: bold;
+}
+
+.book_img{
+    width: 20%;
+    height: 280px;
+    margin: 2% 0 0 2%;
+}
