@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h3>Edit Review</h3>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/update_review/{{review['review_id']}}" method="post">
+      <textarea name="content" rows="3" cols="80">{{review.content}}</textarea>
+      <input type="submit" value="Edit Review">
+    </form>
+  </body>
+</html>

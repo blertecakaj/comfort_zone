@@ -54,12 +54,18 @@ def register_user():
 
         return redirect('/')
 
+@app.route('/on_login')
+def on_login():
+    return render_template("RegisterLogin.html")
+
 @app.route('/login', methods=['POST'])
 def login_user():
 
     is_valid = True
 
-        
+    if len(request.form['email']) < 1:
+        is_valid = False
+        flash("Please enter your email!")
     if len(request.form['password']) < 1:
         is_valid = False
         flash("Please enter your password!")
@@ -81,7 +87,7 @@ def login_user():
             if bcrypt.check_password_hash(hashed_password, request.form['password']):
                 session['user_id'] = user[0]['user_id']
                 session['user_level'] = user[0]['user_level']
-                return redirect('/')
+                return redirect('/books')
             else:
                 flash("Invalid password!")
                 return redirect('/login_register')
@@ -95,11 +101,11 @@ def logout():
     session.clear()
     return redirect('/')
 
-@app.route('/')
-def landing():
-    return render_template('index.html')
+# @app.route('/')
+# def landing():
+#     return render_template('index.html')
 
-@app.route('/books')
+@app.route('/')
 def fetch_books():
     # This query will UPSERT NYT NonFiction Best Sellers- Not the "nonfinction" in she api key This query happens when the page is loaded and the route can be changed.
     result = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key={nyt_key}')
@@ -305,14 +311,14 @@ def fetch_books():
     query='SELECT * From books'
     all_books = mysql.query_db(query,data)
 
-    return render_template('books.html', all_books = all_books)
+    mysql=connectToMySQL("comfort_zone")
+    query='SELECT category,img_url From books group by category'
+    cat = mysql.query_db(query,data)
+
+    return render_template('index.html', all_books = all_books,category=cat)
 
 @app.route('/book_details/<id>')
 def book_details(id):
-
-    if 'user_id' not in session:
-        return redirect('/login_register')
-
     mysql = connectToMySQL('comfort_zone')
     query = "select books.id, books.isbn, books.title, wishlist_books.books_id, wishlist_books.users_id, books.author, books.img_url, books.new_price, books.used_price FROM wishlist_books right JOIN books ON books.id = wishlist_books.books_id left join users on wishlist_books.users_id = users.user_id where books.id = %(bid)s"
     data = {
@@ -328,14 +334,15 @@ def book_details(id):
     liked_books_ids = [data['books_id'] for data in mysql.query_db(query, data)]
 
     mysql = connectToMySQL('comfort_zone')
+    query = "select count(review_id) from reviews right join books on books.id = reviews.book_id group by review_id where books.id=%(bid)s"
+    count = mysql.query_db(query)
+
+    mysql = connectToMySQL('comfort_zone')
     query = "select * from reviews left join users on users.user_id = reviews.author right join books on books.id = reviews.book_id where books.id= %(bid)s"
     data = {
         'bid':id
     }
     reviews = mysql.query_db(query, data)
-
-    if reviews[0]['content'] is None:
-        return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=[])
 
     return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=reviews)
 
@@ -420,9 +427,6 @@ def delete_review(review_id):
         return redirect('/')
     mysql = connectToMySQL('comfort_zone')
     query = "DELETE from reviews where review_id = %(rid)s"
-    data = {
-        'rid': review_id
-    }
     mysql.query_db(query, data)
     return redirect('/')
 
@@ -453,6 +457,47 @@ def  remove_from_wishlist(users_id, books_id):
     }
     mysql.query_db(query, data)
     return redirect('/book_details/{}'.format(books_id))
+
+@app.route('/add_to_cart/<users_id>/<books_id>')
+def add_to_cart(users_id, books_id):
+    if 'user_id' not in session:
+        return redirect('/')
+        flash("You have to login in order to add a book to cart!")
+    mysql = connectToMySQL('comfort_zone')
+    query = "INSERT into cart (user_id, books_id) VALUES (%(uid)s, %(bid)s)"
+    data = {
+        'uid': session['user_id'],
+        'bid': books_id
+    }
+    mysql.query_db(query, data)
+    return redirect('/book_details/{}'.format(books_id))
+
+
+@app.route('/remove_from_cart/<users_id>/<books_id>')
+def  remove_from_cart(users_id, books_id):
+    if 'user_id' not in session:
+        return redirect('/')
+        flash("You have to login in order to remove a book from your cart!")
+    mysql = connectToMySQL('comfort_zone')
+    query = "DELETE from cart where user_id=%(uid)s and books_id=%(bid)s"
+    data = {
+        'uid': session['user_id'],
+        'bid': books_id
+    }
+    mysql.query_db(query, data)
+    return redirect('/book_details/{}'.format(books_id))
+
+@app.route('/cart')
+def cart():
+    mysql = connectToMySQL('comfort_zone')
+    query = "SELECT * from cart join books on cart.books_id=books.id where user_id=%(rid)s"
+    data = {
+        'rid': session['user_id']
+    }
+    cart = mysql.query_db(query, data)
+    return render_template('cart.html',cart=cart)
+
+
 
 @app.route('/users')
 def users():
