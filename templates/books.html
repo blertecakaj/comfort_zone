@@ -3,36 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/bookCategory.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
   <title>books</title>
 </head>
 <body>
-
-  <div id="Nonfiction">
-    <h3>Nonfiction</h3>
-    {% for books in all_books %}
-      {% if books['category'] == 'Nonfiction' %}
-        <img src="{{books['img_url']}}" alt="book cover">
-        <h4> Title: {{books['title']}}</h4>
-        <h5>Author: {{books['author']}}</h5>
-         <p> Description: {{books['description']}}</p>
-      {% endif %}
-    {% endfor %}
+  <div class="wapper">
+    <div class="header">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+        <img src="../static/img/study.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        ComfortZone
+        <button type="submit" class="btn"><a href="/">Home</a></button>
+      </a>
+      </nav>
+    </div>
+    <div class="main">
+      <div id="Nonfiction">
+        <h3>Nonfiction</h3>
+        {% for books in all_books %}
+          {% if books['category'] == 'Nonfiction' %}
+          <div class="card-deck"  style="display: inline-block; vertical-align: top;">
+            <div class="card" style="max-width:250px; height:650px;">
+              <img src="{{books['img_url']}}" class="card-img-top" alt="book_cover">
+              <div class="card-body">
+                <h4 class="card-title">{{books['title']}}</h4>
+                <h5>{{books['author']}}</h5>
+                <p class="card-text">{{books['description']}}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <h3>Fiction</h3>
+      <div id="Fiction">
+        {% for books in all_books %}
+          {% if books['category'] == 'Fiction' %}
+          <div class="card-deck"  style="display: inline-block; vertical-align: top;">
+            <div class="card" style="max-width:250px; height:650px;">
+              <img src="{{books['img_url']}}" class="card-img-top" alt="book_cover">
+              <div class="card-body">
+                <h4 class="card-title">{{books['title']}}</h4>
+                <h5>{{books['author']}}</h5>
+                <p class="card-text">{{books['description']}}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
-
-  <div id="Fiction">
-    <h3>Nonfiction</h3>
-    {% for books in all_books %}
-      {% if books['category'] == 'Fiction' %}
-        <img src="{{books['img_url']}}" alt="book cover">
-        <h4> Title: {{books['title']}}</h4>
-        <h5>Author: {{books['author']}}</h5>
-         <p> Description: {{books['description']}}</p>
-      {% endif %}
-    {% endfor %}
-  </div>
-
-
-
  
 </body>
 </html>
