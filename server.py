@@ -13,6 +13,11 @@ bcrypt = Bcrypt(app)
 
 nyt_key ='qNS0aG1k1DENr5O8JbPEyJXnc9yP6tEA'
 
+@app.route('/')
+def landing():
+    return render_template('index.html')
+ 
+
 @app.route('/login_register')
 def login_register():
     return render_template("registerlogin.html")
@@ -54,18 +59,12 @@ def register_user():
 
         return redirect('/')
 
-@app.route('/on_login')
-def on_login():
-    return render_template("RegisterLogin.html")
-
 @app.route('/login', methods=['POST'])
 def login_user():
 
     is_valid = True
 
-    if len(request.form['email']) < 1:
-        is_valid = False
-        flash("Please enter your email!")
+        
     if len(request.form['password']) < 1:
         is_valid = False
         flash("Please enter your password!")
@@ -87,7 +86,7 @@ def login_user():
             if bcrypt.check_password_hash(hashed_password, request.form['password']):
                 session['user_id'] = user[0]['user_id']
                 session['user_level'] = user[0]['user_level']
-                return redirect('/books')
+                return redirect("/")
             else:
                 flash("Invalid password!")
                 return redirect('/login_register')
@@ -100,10 +99,6 @@ def login_user():
 def logout():
     session.clear()
     return redirect('/')
-
-@app.route('/')
-def landing():
-    return render_template('index.html')
 
 @app.route('/books')
 def fetch_books():
@@ -315,8 +310,12 @@ def fetch_books():
 
 @app.route('/book_details/<id>')
 def book_details(id):
+
+    if 'user_id' not in session:
+        return redirect('/login_register')
+
     mysql = connectToMySQL('comfort_zone')
-    query = "select books.id, books.isbn, books.title, wishlist_books.books_id, wishlist_books.users_id, books.author, books.img_url, books.new_price, books.used_price FROM wishlist_books right JOIN books ON books.id = wishlist_books.books_id left join users on wishlist_books.users_id = users.user_id where books.id = %(bid)s"
+    query = "select books.id, books.isbn,books.description, books.title, wishlist_books.books_id, wishlist_books.users_id, books.author, books.img_url, books.new_price, books.used_price FROM wishlist_books right JOIN books ON books.id = wishlist_books.books_id left join users on wishlist_books.users_id = users.user_id where books.id = %(bid)s"
     data = {
         'bid':id
     }
@@ -330,15 +329,14 @@ def book_details(id):
     liked_books_ids = [data['books_id'] for data in mysql.query_db(query, data)]
 
     mysql = connectToMySQL('comfort_zone')
-    query = "select count(review_id) from reviews right join books on books.id = reviews.book_id group by review_id where books.id=%(bid)s"
-    count = mysql.query_db(query)
-
-    mysql = connectToMySQL('comfort_zone')
     query = "select * from reviews left join users on users.user_id = reviews.author right join books on books.id = reviews.book_id where books.id= %(bid)s"
     data = {
         'bid':id
     }
     reviews = mysql.query_db(query, data)
+
+    if reviews[0]['content'] is None:
+        return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=[])
 
     return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=reviews)
 
@@ -388,7 +386,7 @@ def edit_review(review_id):
         'rid': review_id
     }
     review = mysql.query_db(query, data)
-
+    
     return render_template('edit_review.html', review=review[0])
 
 
@@ -423,6 +421,9 @@ def delete_review(review_id):
         return redirect('/')
     mysql = connectToMySQL('comfort_zone')
     query = "DELETE from reviews where review_id = %(rid)s"
+    data = {
+        'rid': review_id
+    }
     mysql.query_db(query, data)
     return redirect('/')
 
@@ -511,6 +512,9 @@ def on_profile():
 
     return render_template('userProfile.html',users=result,images=images)
 
+@app.route("/on_book_details")
+def on_book_details():
+    return render_template("bookdetail.html")
 
 if(__name__) =="__main__":
     app.run(debug=True)
