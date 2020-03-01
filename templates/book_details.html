@@ -2,6 +2,22 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap core CSS -->
+  <link  rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" >
+
+  <!-- Custom fonts for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}"  type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700"  type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  
+
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/agency.css') }}" rel="stylesheet">
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
     <link rel="stylesheet" href="../static/css/book_details.css">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -10,22 +26,6 @@
     <title>Comfort Zone</title>
   </head>
   <body>
-    <h3>{{book.title}}</h3>
-    <h4>{{book.author}}</h4>
-    <p>{{book.isbn}}</p>
-    <h3>New Book Price: &#36;{{book.new_price}}</h3>
-    <h3>Used Book Price: &#36;{{book.used_price}}</h3>
-    <img src="{{book.img_url}}" alt="{{book.title}}">
-    <p>{{book.description}}</p>
-    <button>Add To Cart</button>
-    {% if book.id in liked_books_ids %}
-    <span id = heart><a href="/remove_from_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart" aria-hidden="true" ></i></a></span>
-    {% else %}
-    <span id = heart><a href="/add_to_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart-o" aria-hidden="true" ></i></a></span>
-    {% endif %}
-
-
-
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
@@ -33,13 +33,61 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">
+      <img src="../static/img/study.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      ComfortZone
+      <button type="submit" class="btn"><a href="/">Home</a></button>
+    </a>
+    </nav>
+  <div class="container" style="position: relative; top:200px">
+    <div class="row">
+        <div class="col-lg-5">
+            <img style="width:100%;"src="{{book.img_url}}">
+        </div>
+        <div class="col-7 ">
+            <div class="text-center">
+            <h2 class="section-heading text-uppercase">{{book.title}}</h2>
+            <h3 class="section-subheading text-muted">{{book.author}}</h3>
+            <div style="margin-top: 15%;">
+                <h3 class="section-subheading text-muted">Description</h3>
+                <div class="portfolio-caption">
+                    <p class="text-muted">{{book.description}}</p>
+                 </div>
+            </div>
 
+            <h3>New Book Price: <span style="font-style: italic;"> &#36;{{book.new_price}}</span></h3>
+            <h3>Used Book Price: <span style="font-style: italic;"> &#36;{{book.used_price}}</span></h3>
+            <div class="row" style="margin-top: 15%;">
+                <div class="col-6">
+            <a href="#services"><img src="{{url_for('static',filename='img/supermarket.png')}}" style="width:40px;"></a>
+                </div>
+                <div class="col-6">
+                  {% if book.id in liked_books_ids %}
+                    <span id = heart><a href="/remove_from_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart" aria-hidden="true" ></i></a></span>
+                  {% else %}
+                    <span id = heart><a href="/add_to_wishlist/{{book['users_id']}}/{{book.id}}"><i class="fa fa-heart-o" aria-hidden="true" ></i></a></span>
+                  {% endif %}
+                </div>
+            </div>            
+            </div>
+    </div>
+  </div>
+  <div class="review"> 
+    <h3>Add a Review</h3>
     <form action="/add_review/{{book.isbn}}" method="post">
-      <textarea name="content" rows="3" cols="80"></textarea>
-      <input type="submit" value="Add Review">
+      <textarea name="content" rows="3" cols="50"></textarea><br>
+      <input type="submit" class="btn btn-outline-warning" value="Add review">
     </form>
-    {% for review in reviews%}
+    {% for review in reviews %}
     <p>{{review['first_name']}} {{review['last_name']}} said: {{review['content']}}</p>
+      {% if review.user_id == session['user_id'] %}
+        <a href="/edit_review/{{review.review_id}}"><button type="button" class="btn btn-outline-warning">Edit review</button></a>
+        <a href="/delete_review/{{review.review_id}}"><button type="button" class="btn btn-outline-warning">Delete review</button></a>
+      {% endif %}
     {% endfor %}
+   
+  </div>
   </body>
 </html>
