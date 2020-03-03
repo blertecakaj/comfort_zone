@@ -32,7 +32,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
       <img src="{{url_for('static',filename='img/study.png')}}" style="width:40px;">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">&nbsp;ComfortZone</a>
+      <a class="navbar-brand js-scroll-trigger" href="/">&nbsp;ComfortZone</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -68,10 +68,10 @@
       </div>
       <div class="row" style="margin-top: 2%;">
         {% for cart in cart %}
-        <div class="card mb-12" style="min-width: 940px;">
+        <div class="card mb-12" style="min-width: 940px; margin: 10px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="{{cart['img_url']}}" class="card-img" alt="...">
+                <img src="{{cart['img_url']}}" class="card-img" alt="..." height="200px">
               </div>
               <div class="col-md-8">
                 <div class="card-body text-center">
@@ -79,6 +79,7 @@
                   <p class="card-text">{{cart.author}}jojo</p>
                   <p class="card-text"><small class="text-muted">{{cart.price}}</small></p>
                   <a href="#" class="btn btn-warning">Process to payment</a>
+                  <a href="/remove_from_cart/{{cart.user_id}}/{{cart.books_id}}" class="btn btn-warning">Remove from cart</a>
                 </div>
               </div>
             </div>

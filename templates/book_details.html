@@ -61,7 +61,8 @@
             <h3>Used Book Price: <span style="font-style: italic;"> &#36;{{book.used_price}}</span></h3>
             <div class="row" style="margin-top: 15%;">
                 <div class="col-6">
-            <a href="#services"><img src="{{url_for('static',filename='img/supermarket.png')}}" style="width:40px;"></a>
+                  
+            <a href="/add_to_cart/{{book['users_id']}}/{{book.id}}"><img src="{{url_for('static',filename='img/supermarket.png')}}" style="width:40px;"></a>
                 </div>
                 <div class="col-6">
                   {% if book.id in liked_books_ids %}

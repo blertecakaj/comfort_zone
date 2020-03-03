@@ -335,7 +335,7 @@ def  remove_from_cart(users_id, books_id):
         'bid': books_id
     }
     mysql.query_db(query, data)
-    return redirect('/book_details/{}'.format(books_id))
+    return redirect('/cart')
 
 @app.route('/cart')
 def cart():
@@ -369,6 +369,10 @@ def book_details(id):
     liked_books_ids = [data['books_id'] for data in mysql.query_db(query, data)]
 
     mysql = connectToMySQL('comfort_zone')
+    query = "SELECT books_id from cart where user_id=%(uid)s"
+    cart_id = [data['books_id'] for data in mysql.query_db(query, data)]
+ 
+    mysql = connectToMySQL('comfort_zone')
     query = "select * from reviews left join users on users.user_id = reviews.author right join books on books.id = reviews.book_id where books.id= %(bid)s"
     data = {
         'bid':id
@@ -376,9 +380,9 @@ def book_details(id):
     reviews = mysql.query_db(query, data)
 
     if reviews[0]['content'] is None:
-        return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=[])
+        return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=[],cart_id=cart_id)
 
-    return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=reviews)
+    return render_template("book_details.html", book=book[0], liked_books_ids=liked_books_ids, reviews=reviews,cart_id=cart_id)
 
 @app.route('/book_category/<category>')
 def book_category(category):
@@ -551,6 +555,18 @@ def on_profile():
     images = mysql.query_db(query)
 
     return render_template('userProfile.html',users=result,images=images)
+
+@app.route("/remove_after_payment/<books_id>")
+def after_payment():
+    mysql = connectToMySQL('comfort_zone')
+    query="DELETE from cart where user_id=%(uid)s and books_id=%(bid)s"
+    data = {
+        'uid': session['user_id'],
+        'bid': books_id
+    }
+    mysql.query_db(query, data)
+    return redirect('/cart')
+
 
 @app.route("/on_book_details")
 def on_book_details():
