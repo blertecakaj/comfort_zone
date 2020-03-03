@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS `comfort_zone`.`books` (
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `img_url` VARCHAR(255) NULL DEFAULT NULL,
   `category` VARCHAR(45) NULL DEFAULT NULL,
-  `new_price` DOUBLE NULL DEFAULT NULL,
-  `used_price` DOUBLE NULL DEFAULT NULL,
+  `price` DOUBLE NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
@@ -56,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `comfort_zone`.`users` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `comfort_zone`.`reviews` (
     FOREIGN KEY (`author`)
     REFERENCES `comfort_zone`.`users` (`user_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -95,16 +96,12 @@ CREATE TABLE IF NOT EXISTS `comfort_zone`.`wishlist_books` (
   PRIMARY KEY (`users_id`, `books_id`),
   INDEX `fk_users_has_books_books1_idx` (`books_id` ASC) VISIBLE,
   INDEX `fk_users_has_books_users1_idx` (`users_id` ASC) VISIBLE,
-  CONSTRAINT `fk_users_has_books_users1`
-    FOREIGN KEY (`users_id`)
-    REFERENCES `comfort_zone`.`users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_has_books_books1`
     FOREIGN KEY (`books_id`)
-    REFERENCES `comfort_zone`.`books` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `comfort_zone`.`books` (`id`),
+  CONSTRAINT `fk_users_has_books_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `comfort_zone`.`users` (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
