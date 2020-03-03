@@ -543,6 +543,11 @@ def remove_admin(user_id):
 
 @app.route("/user_profile")
 def on_profile():
+
+    if 'user_id' not in session:
+        flash("You must be loged in")
+        return redirect('login_register')
+
     mysql = connectToMySQL('comfort_zone')
     query="SELECT * FROM users WHERE user_id = %(id)s"
     data={
@@ -551,7 +556,7 @@ def on_profile():
     result = mysql.query_db(query,data)
 
     mysql = connectToMySQL('comfort_zone')
-    query = "SELECT books.img_url FROM users JOIN wishlist_books ON users.user_id=wishlist_books.users_id JOIN books on books.id =wishlist_books.books_id "
+    query = "SELECT books.img_url, users.user_id FROM users JOIN wishlist_books ON users.user_id=wishlist_books.users_id JOIN books on books.id =wishlist_books.books_id "
     images = mysql.query_db(query)
 
     return render_template('userProfile.html',users=result,images=images)
