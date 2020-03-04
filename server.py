@@ -113,10 +113,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="Nonfiction"
-        new_price=20.35
-        used_price=13.43
+        price=20.35
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -126,8 +125,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         nonfiction_book_id = mysql.query_db(query,data)
 
@@ -146,10 +144,10 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="advice_how_to_miscellaneous"
-        new_price=11.99
-        used_price=6.20
+        price=11.99
+
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -159,8 +157,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         advice_how_to_miscellaneous_book_id = mysql.query_db(query,data)
 
@@ -179,10 +176,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="Childrens_Series"
-        new_price=15.43
-        used_price=9.99
+        price=15.43
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -192,8 +188,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         childrens_series_book_id = mysql.query_db(query,data)
 
@@ -212,10 +207,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="Young_Adult"
-        new_price=18.65
-        used_price=11.32
+        price=18.65
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -225,8 +219,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         young_adult_book_id = mysql.query_db(query,data)
 
@@ -245,10 +238,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="graphic_manga"
-        new_price=15.88
-        used_price=8.66
+        price=15.88
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -258,8 +250,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         graphic_manga_book_id = mysql.query_db(query,data)
 
@@ -278,10 +269,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="Fiction"
-        new_price=19.99
-        used_price=8.55
+        price=19.99
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, new_price, used_price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(np)s, %(up)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
 
         data = {
             "id": isbn,
@@ -291,8 +281,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "np": new_price,
-            "up": used_price
+            "p": price
         }
         fiction_book_id = mysql.query_db(query,data)
 
@@ -355,7 +344,7 @@ def book_details(id):
         return redirect('/login_register')
 
     mysql = connectToMySQL('comfort_zone')
-    query = "select books.id, books.isbn,books.description, books.title, wishlist_books.books_id, wishlist_books.users_id, books.author, books.img_url, books.new_price, books.used_price FROM wishlist_books right JOIN books ON books.id = wishlist_books.books_id left join users on wishlist_books.users_id = users.user_id where books.id = %(bid)s"
+    query = "select books.id, books.isbn,books.description, books.title, wishlist_books.books_id, wishlist_books.users_id, books.author, books.img_url, books.price FROM wishlist_books right JOIN books ON books.id = wishlist_books.books_id left join users on wishlist_books.users_id = users.user_id where books.id = %(bid)s"
     data = {
         'bid':id
     }
@@ -577,5 +566,16 @@ def after_payment():
 def on_book_details():
     return render_template("bookdetail.html")
 
+@app.route('/on_search', methods=['POST'])
+def on_search():
+    mysql = connectToMySQL('comfort_zone')
+    query = "SELECT books.title, books.author from books where books.title LIKE %%(btitle)s;"
+    print(request.form['search_term'])
+    data = {
+        'btitle': request.form['search_term'] + '%'
+    }
+    results = mysql.query_db(query, data)
+    return render_template('partials/search_results.html', results=results)
+ 
 if(__name__) =="__main__":
     app.run(debug=True)
