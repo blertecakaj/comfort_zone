@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkout</title>
+</head>
+<body>
+
+    
+
+<div>
+  <h2>Buy for {{total['price']}}</h2>
+  <form action="/charge/{{total['books_id']}}" method="post">
+    <script
+      src="https://checkout.stripe.com/checkout.js"
+      class="stripe-button"
+      data-key="{{ key }}"
+      data-description="A Flask Charge"
+      data-amount= "{{ total['price'] *100 }}"
+      data-locale="auto">
+    </script>
+  </form>
+</div>
+
+</body>
+</html>

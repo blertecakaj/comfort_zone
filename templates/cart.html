@@ -71,14 +71,14 @@
         <div class="card mb-12" style="min-width: 940px; margin: 10px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="{{cart['img_url']}}" class="card-img" alt="..." height="200px">
+                <img src="{{cart['img_url']}}" class="card-img" alt="..." height="100%">
               </div>
               <div class="col-md-8">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{cart.title}}popo</h5>
                   <p class="card-text">{{cart.author}}jojo</p>
                   <p class="card-text"><small class="text-muted">{{cart.price}}</small></p>
-                  <a href="#" class="btn btn-warning">Process to payment</a>
+                  <a href="/payment/{{cart.books_id}}" class="btn btn-warning">Process to payment</a>
                   <a href="/remove_from_cart/{{cart.user_id}}/{{cart.books_id}}" class="btn btn-warning">Remove from cart</a>
                 </div>
               </div>
