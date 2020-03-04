@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, jsonify
 from mysqlconnection import connectToMySQL
 from flask_bcrypt import Bcrypt
 import requests
 import re
+import stripe
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -12,6 +13,12 @@ bcrypt = Bcrypt(app)
 
 
 nyt_key ='qNS0aG1k1DENr5O8JbPEyJXnc9yP6tEA'
+
+stripe_secret_key = 'sk_test_KDY2ZBNJ6ZMA9a46g7WjkaaI007e1tqiAv'
+stripe_publishable_key= 'pk_test_8yq5ZQ4KcAYogMhiZNzQEsii00SJEAvZP5' 
+
+
+stripe.api_key = stripe_secret_key
  
 
 @app.route('/login_register')
@@ -98,6 +105,7 @@ def logout():
 
 @app.route('/')
 def fetch_books():
+
     # This query will UPSERT NYT NonFiction Best Sellers- Not the "nonfinction" in she api key This query happens when the page is loaded and the route can be changed.
     result = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key={nyt_key}')
     result.status_code
@@ -113,9 +121,9 @@ def fetch_books():
         description= val['description']
         img_url = val['book_image']
         category="Nonfiction"
-        price=20.35
+        price =20.35
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -125,7 +133,8 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
+            
         }
         nonfiction_book_id = mysql.query_db(query,data)
 
@@ -145,9 +154,8 @@ def fetch_books():
         img_url = val['book_image']
         category="advice_how_to_miscellaneous"
         price=11.99
-
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -157,7 +165,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
         }
         advice_how_to_miscellaneous_book_id = mysql.query_db(query,data)
 
@@ -178,7 +186,7 @@ def fetch_books():
         category="Childrens_Series"
         price=15.43
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -188,7 +196,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
         }
         childrens_series_book_id = mysql.query_db(query,data)
 
@@ -208,8 +216,9 @@ def fetch_books():
         img_url = val['book_image']
         category="Young_Adult"
         price=18.65
+    
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -219,7 +228,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
         }
         young_adult_book_id = mysql.query_db(query,data)
 
@@ -239,8 +248,9 @@ def fetch_books():
         img_url = val['book_image']
         category="graphic_manga"
         price=15.88
+
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -250,7 +260,7 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
         }
         graphic_manga_book_id = mysql.query_db(query,data)
 
@@ -271,7 +281,7 @@ def fetch_books():
         category="Fiction"
         price=19.99
         mysql = connectToMySQL("comfort_zone")
-        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(p)s);"
+        query = "REPLACE INTO books(id, isbn, title, author, description, img_url, category, price) VALUES (%(id)s, %(isbn)s, %(title)s, %(au)s, %(desc)s, %(img)s, %(cat)s, %(up)s);"
 
         data = {
             "id": isbn,
@@ -281,10 +291,10 @@ def fetch_books():
             "desc": description,
             "img": img_url,
             "cat": category,
-            "p": price
+            "up": price
         }
         fiction_book_id = mysql.query_db(query,data)
-
+    
     #Query to fetch all books and make data available to the render books.html template
 
     mysql=connectToMySQL("comfort_zone")
@@ -295,7 +305,7 @@ def fetch_books():
     query='SELECT category,img_url From books group by category'
     cat = mysql.query_db(query,data)
 
-    return render_template('index.html', all_books = all_books,category=cat)
+    return render_template('index.html', all_books = all_books, category=cat)
 
 @app.route('/add_to_cart/<users_id>/<books_id>')
 def add_to_cart(users_id, books_id):
@@ -376,7 +386,7 @@ def book_details(id):
 @app.route('/book_category/<category>')
 def book_category(category):
     mysql = connectToMySQL('comfort_zone')
-    query = "SELECT * from books where books.category = %(ctg)s";
+    query = "SELECT * from books where books.category = %(ctg)s;"
     data = {
         'ctg': category
     }
@@ -550,8 +560,58 @@ def on_profile():
 
     return render_template('userProfile.html',users=result,images=images)
 
-@app.route("/remove_after_payment/<books_id>")
-def after_payment():
+
+
+@app.route("/on_book_details")
+def on_book_details():
+    return render_template("bookdetail.html")
+
+#*********BEGIN STRIPE API PAYMENT**************************************
+@app.route("/payment/<books_id>")
+def payment_details(books_id):
+    mysql=connectToMySQL('comfort_zone')
+    query= "Select cart.books_id, books.price, user_id FROM cart join books on cart.books_id = books.id where user_id = %(uid)s and books.id = %(bid)s"
+    data= {
+        'uid': session['user_id'],
+        'bid': books_id
+    }
+
+    result= mysql.query_db(query, data)
+    total = result[0]
+   
+    return render_template('checkout.html',key=stripe_publishable_key, total = total)
+
+@app.route('/charge/<books_id>', methods=['POST'])
+def charge(books_id):
+    mysql=connectToMySQL('comfort_zone')
+    query= "Select cart.books_id, books.price, cart.user_id, users.email FROM cart join books on cart.books_id = books.id join users on cart.user_id= users.user_id where cart.user_id = %(uid)s and books.id = %(bid)s"
+    data= {
+        'uid': session['user_id'],
+        'bid': books_id
+    }
+
+    result= mysql.query_db(query, data)
+    charge = result[0]
+
+    # amount in cents
+    amount = charge['price']
+    f_amount = int(amount)*100
+    email = charge['email']
+    print(amount)
+    print(email)
+
+    customer = stripe.Customer.create(
+        email= email,
+        source=request.form['stripeToken']
+    )
+
+    stripe.Charge.create(
+        customer=customer.id,
+        amount=f_amount,
+        currency='usd',
+        description='Flask Charge'
+    )
+    #this will delete the book that was just paid for.  Same code just moved it down so it runs after card is successful
     mysql = connectToMySQL('comfort_zone')
     query="DELETE from cart where user_id=%(uid)s and books_id=%(bid)s"
     data = {
@@ -559,23 +619,8 @@ def after_payment():
         'bid': books_id
     }
     mysql.query_db(query, data)
-    return redirect('/cart')
 
+    return render_template('charge.html', amount=amount, charge=charge)
 
-@app.route("/on_book_details")
-def on_book_details():
-    return render_template("bookdetail.html")
-
-@app.route('/on_search', methods=['POST'])
-def on_search():
-    mysql = connectToMySQL('comfort_zone')
-    query = "SELECT books.title, books.author from books where books.title LIKE %%(btitle)s;"
-    print(request.form['search_term'])
-    data = {
-        'btitle': request.form['search_term'] + '%'
-    }
-    results = mysql.query_db(query, data)
-    return render_template('partials/search_results.html', results=results)
- 
 if(__name__) =="__main__":
     app.run(debug=True)
